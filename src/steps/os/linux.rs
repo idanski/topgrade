@@ -116,7 +116,7 @@ pub fn show_pacnew() {
 
 fn upgrade_arch_linux(sudo: &Option<PathBuf>, cleanup: bool, run_type: RunType) -> Result<(), Error> {
     if let Some(yay) = which("yay") {
-        if let Some(python) = which("python") {
+        if let Some(python) = which("python").and_then(|p| p.canonicalize().ok()) {
             if python != PathBuf::from("/usr/bin/python") {
                 print_warning(format!(
                     "Python detected at {:?}, which is probably not the system Python.
